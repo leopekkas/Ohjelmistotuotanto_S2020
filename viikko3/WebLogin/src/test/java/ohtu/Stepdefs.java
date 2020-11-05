@@ -123,4 +123,43 @@ public class Stepdefs {
         element = driver.findElement(By.name("signup"));
         element.submit();
     }
+
+    //t.11
+    @Given("user with username {string} with password {string} is successfully created")
+    public void succesfulNewUser(String username, String password) {
+        driver.get(baseUrl);
+        WebElement element = driver.findElement(By.xpath("//a[@href='user']"));
+        element.click();
+        element = driver.findElement(By.name("username"));
+        element.sendKeys(username);
+        element = driver.findElement(By.name("password"));
+        element.sendKeys(password);
+        element = driver.findElement(By.name("passwordConfirmation"));
+        element.sendKeys(password);
+        element = driver.findElement(By.name("signup"));
+        element.submit();
+
+        element = driver.findElement(By.xpath("//a[@href='ohtu']"));
+        element.click();
+
+        element = driver.findElement(By.xpath("//a[@href='/']"));
+        element.click();
+
+    }
+
+    @Given("user with username {string} and password {string} is tried to be created")
+    public void unsuccesfulNewUser(String username, String password) {
+        driver.get(baseUrl);
+        WebElement element = driver.findElement(By.xpath("//a[@href='user']"));
+        element.click();
+        element = driver.findElement(By.name("username"));
+        element.sendKeys(username);
+        element = driver.findElement(By.name("password"));
+        element.sendKeys(password);
+        element = driver.findElement(By.name("passwordConfirmation"));
+        element.sendKeys(password);
+        element = driver.findElement(By.name("signup"));
+        element.submit();
+
+    }
 }
