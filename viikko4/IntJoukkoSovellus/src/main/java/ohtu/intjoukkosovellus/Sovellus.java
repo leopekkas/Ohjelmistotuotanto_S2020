@@ -11,21 +11,32 @@ public class Sovellus {
         String luettu = lukija.nextLine();
         return luettu;
     }
+    
+    private static int lueTasaluku(String kysymys) {
+        Scanner lukija = new Scanner(System.in);
+        System.out.println(kysymys);
+        
+        return lukija.nextInt();
+    }
+    
+    private static IntJoukko lueJoukko(String kysymys) {
+        System.out.print(kysymys);
+        return mikaJoukko();
+    }
 
     private static IntJoukko mikaJoukko() {
         String luettu;
         Scanner lukija = new Scanner(System.in);
         luettu = luku();
         while (true) {
-            if (luettu.equals("A") || luettu.equals("a")) {
+            if (luettu.equalsIgnoreCase("A")) {
                 return A;
-            } else if (luettu.equals("B") || luettu.equals("b")) {
+            } else if (luettu.equalsIgnoreCase("B")) {
                 return B;
-            } else if (luettu.equals("C") || luettu.equals("c")) {
+            } else if (luettu.equalsIgnoreCase("C")) {
                 return C;
             } else {
-                System.out.println("Virheellinen joukko! " + luettu);
-                System.out.print("Yritä uudelleen!");
+                System.out.println("Virheellinen joukko! " + luettu + "\nYritä uudelleen!");
                 luettu = luku();
             }
         }
@@ -35,11 +46,8 @@ public class Sovellus {
         int lisLuku;
         IntJoukko joukko;
         Scanner lukija = new Scanner(System.in);
-        System.out.print("Mihin joukkoon? ");
-        joukko = mikaJoukko();
-        System.out.println("");
-        System.out.print("Mikä luku lisätään? ");
-        lisLuku = lukija.nextInt();
+        joukko = lueJoukko("Mihin joukkoon? ");
+        lisLuku = lueTasaluku("Mikä luku lisätään? ");
         joukko.lisaa(lisLuku);
         return;
 
@@ -47,10 +55,10 @@ public class Sovellus {
 
     private static void yhdiste() {
         IntJoukko aJoukko, bJoukko, c;
-        System.out.print("1. joukko? ");
-        aJoukko = mikaJoukko();
-        System.out.print("2. joukko? ");
-        bJoukko = mikaJoukko();
+        
+        aJoukko = lueJoukko("1. joukko? ");
+        bJoukko = lueJoukko("2. joukko? ");
+        
         c = IntJoukko.yhdiste(aJoukko, bJoukko);
         System.out.println("A yhdiste B = " + c.toString());
         return;
@@ -58,10 +66,10 @@ public class Sovellus {
 
     private static void leikkaus() {
         IntJoukko aJoukko, bJoukko, c;
-        System.out.print("1. joukko? ");
-        aJoukko = mikaJoukko();
-        System.out.print("2. joukko? ");
-        bJoukko = mikaJoukko();
+        
+        aJoukko = lueJoukko("1. joukko? ");
+        bJoukko = lueJoukko("2. joukko? ");
+        
         c = IntJoukko.leikkaus(aJoukko, bJoukko);
         System.out.println("A leikkaus B = " + c.toString());
         return;
@@ -69,10 +77,10 @@ public class Sovellus {
 
     private static void erotus() {
         IntJoukko aJoukko, bJoukko, c;
-        System.out.print("1. joukko? ");
-        aJoukko = mikaJoukko();
-        System.out.print("2. joukko? ");
-        bJoukko = mikaJoukko();
+        
+        aJoukko = lueJoukko("1. joukko? ");
+        bJoukko = lueJoukko("2. joukko? ");
+        
         c = IntJoukko.erotus(aJoukko, bJoukko);
         System.out.println("A erotus B = " + c.toString());
         return;
@@ -80,26 +88,22 @@ public class Sovellus {
 
     private static void poista() {
         IntJoukko joukko;
-        int lisLuku;
-        Scanner lukija = new Scanner(System.in);
+        
         System.out.print("Mistä joukosta? ");
-        joukko = mikaJoukko();
-        System.out.print("Mikä luku poistetaan? ");
-        lisLuku = lukija.nextInt();
+        joukko = lueJoukko("Mistä joukosta? ");
+        int lisLuku = lueTasaluku("Mikä luku poistetaan? ");
         joukko.poista(lisLuku);
+        
         return;
     }
 
     private static void kuuluu() {
         IntJoukko joukko;
-        int kysLuku;
-        Scanner lukija = new Scanner(System.in);
-        System.out.print("Mihin joukkoon? ");
-        joukko = mikaJoukko();
-        System.out.print("Mikä luku? ");
-        kysLuku = lukija.nextInt();
-        boolean kuuluuko = joukko.kuuluu(kysLuku);
-        if (kuuluuko) {
+        
+        joukko = lueJoukko("Mihin joukkoon? ");
+        int kysLuku = lueTasaluku("Mikä luku? ");
+        
+        if (joukko.kuuluu(kysLuku)) {
             System.out.println(kysLuku + " kuuluu joukkoon ");
         } else {
             System.out.println(kysLuku + " ei kuulu joukkoon ");
