@@ -74,6 +74,102 @@ public class KauppaTest {
         verify(pankki).tilisiirto(eq("pekka2.0"), eq(42), eq("12346"), anyString(), eq(16));
     }
     
+    @Test
+    public void loppuOlevanOstoksenPaaytyttyaPankinMetodiaTilisiirtoKutsutaan() {
+        // määritellään että tuote numero 1 on maito jonka hinta on 5 ja saldo 10
+        when(varasto.saldo(1)).thenReturn(0); 
+        when(varasto.saldo(2)).thenReturn(10);
+        when(varasto.haeTuote(1)).thenReturn(new Tuote(1, "maito", 5));
+        when(varasto.haeTuote(2)).thenReturn(new Tuote(2, "kahvi", 8));
+        // sitten testattava kauppa 
+        Kauppa k = new Kauppa(varasto, pankki, viite);              
+
+        // tehdään ostokset
+        k.aloitaAsiointi();
+        k.lisaaKoriin(1);     // ostetaan tuotetta numero 1 eli maitoa
+        k.lisaaKoriin(2);     // Ostetaan tuotetta numero 2 eli kahvia
+        k.tilimaksu("pekka", "12345");
+
+        // sitten suoritetaan varmistus, että pankin metodia tilisiirto on kutsuttu
+        verify(pankki).tilisiirto(eq("pekka"), eq(42), eq("12345"), anyString(), eq(8));
+        // toistaiseksi ei välitetty kutsussa käytetyistä parametreista
+    }
+    
+    @Test
+    public void aloitaAsiointiNollaaEdellisenOstoksenTiedot() {
+        // määritellään että tuote numero 1 on maito jonka hinta on 5 ja saldo 10
+        when(varasto.saldo(1)).thenReturn(10); 
+        when(varasto.saldo(2)).thenReturn(10);
+        when(varasto.haeTuote(1)).thenReturn(new Tuote(1, "maito", 5));
+        when(varasto.haeTuote(2)).thenReturn(new Tuote(2, "kahvi", 8));
+        // sitten testattava kauppa 
+        Kauppa k = new Kauppa(varasto, pankki, viite);              
+
+        // tehdään ostokset
+        k.aloitaAsiointi();
+        k.lisaaKoriin(1);     // ostetaan tuotetta numero 1 eli maitoa
+        k.lisaaKoriin(2);     // Ostetaan tuotetta numero 2 eli kahvia
+        k.tilimaksu("pekka", "12345");
+        
+        k.aloitaAsiointi();
+        k.lisaaKoriin(1); 
+        k.tilimaksu("pekka", "12345");
+
+        // sitten suoritetaan varmistus, että pankin metodia tilisiirto on kutsuttu
+        verify(pankki).tilisiirto(eq("pekka"), eq(42), eq("12345"), anyString(), eq(5));
+        // toistaiseksi ei välitetty kutsussa käytetyistä parametreista
+    }
+    
+    @Test
+    public void maksutapahtumallaUusiViitenumero() {
+        Viitegeneraattori mockViite = mock(Viitegeneraattori.class);
+        // määritellään että tuote numero 1 on maito jonka hinta on 5 ja saldo 10
+        when(varasto.saldo(1)).thenReturn(10); 
+        when(varasto.saldo(2)).thenReturn(10);
+        when(varasto.haeTuote(1)).thenReturn(new Tuote(1, "maito", 5));
+        when(varasto.haeTuote(2)).thenReturn(new Tuote(2, "kahvi", 8));
+        // sitten testattava kauppa 
+        Kauppa k = new Kauppa(varasto, pankki, mockViite);              
+
+        // tehdään ostokset
+        k.aloitaAsiointi();
+        k.lisaaKoriin(1);     // ostetaan tuotetta numero 1 eli maitoa
+        k.lisaaKoriin(2);     // Ostetaan tuotetta numero 2 eli kahvia
+        k.tilimaksu("pekka", "12345");
+        
+        // tarkistetaan että tässä vaiheessa viitegeneraattorin metodia seuraava()
+        // on kutsuttu kerran
+        verify(mockViite, times(1)).uusi();
+        
+        k.aloitaAsiointi();
+        k.lisaaKoriin(1); 
+        k.tilimaksu("pekka", "12345");
+
+        // tarkistetaan että tässä vaiheessa viitegeneraattorin metodia seuraava()
+        // on kutsuttu kaksi kertaa
+        verify(mockViite, times(2)).uusi();
+    }
+    
+    @Test
+    public void koristaPoistoToimii() {
+        // määritellään että tuote numero 1 on maito jonka hinta on 5 ja saldo 10
+        when(varasto.saldo(1)).thenReturn(10); 
+        when(varasto.saldo(2)).thenReturn(10);
+        when(varasto.haeTuote(1)).thenReturn(new Tuote(1, "maito", 5));
+        when(varasto.haeTuote(2)).thenReturn(new Tuote(2, "kahvi", 8));
+        // sitten testattava kauppa 
+        Kauppa k = new Kauppa(varasto, pankki, viite);              
+
+        // tehdään ostokset
+        k.aloitaAsiointi();
+        k.lisaaKoriin(1);     // ostetaan tuotetta numero 1 eli maitoa
+        k.lisaaKoriin(2);     // Ostetaan tuotetta numero 2 eli kahvia
+        k.poistaKorista(2);   // Poistetaan numero 2 eli kahvi ostoskorista
+        k.tilimaksu("pekka", "12345");
+        verify(pankki).tilisiirto(eq("pekka"), eq(42), eq("12345"), anyString(), eq(5));   
+        
+    }
+    
 }
 
 
