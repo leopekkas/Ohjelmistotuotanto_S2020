@@ -2,79 +2,89 @@ package ohtu;
 
 public class TennisGame {
     
-    private int m_score1 = 0;
-    private int m_score2 = 0;
-    private String player1Name;
-    private String player2Name;
+    private Player player1;
+    private Player player2;
 
     public TennisGame(String player1Name, String player2Name) {
-        this.player1Name = player1Name;
-        this.player2Name = player2Name;
+        
+        this.player1 = new Player(player1Name);
+        this.player2 = new Player(player2Name);
     }
 
     public void wonPoint(String playerName) {
-        if (playerName == "player1")
-            m_score1 += 1;
-        else
-            m_score2 += 1;
+        if (playerName == "player1") {
+            player1.incrementPoints();
+        } else { 
+            player2.incrementPoints();
+        }
     }
 
     public String getScore() {
-        String score = "";
-        int tempScore=0;
-        if (m_score1==m_score2)
-        {
-            switch (m_score1)
-            {
-                case 0:
-                        score = "Love-All";
-                    break;
-                case 1:
-                        score = "Fifteen-All";
-                    break;
-                case 2:
-                        score = "Thirty-All";
-                    break;
-                case 3:
-                        score = "Forty-All";
-                    break;
-                default:
-                        score = "Deuce";
-                    break;
-                
-            }
-        }
-        else if (m_score1>=4 || m_score2>=4)
-        {
-            int minusResult = m_score1-m_score2;
-            if (minusResult==1) score ="Advantage player1";
-            else if (minusResult ==-1) score ="Advantage player2";
-            else if (minusResult>=2) score = "Win for player1";
-            else score ="Win for player2";
-        }
-        else
-        {
-            for (int i=1; i<3; i++)
-            {
-                if (i==1) tempScore = m_score1;
-                else { score+="-"; tempScore = m_score2;}
-                switch(tempScore)
-                {
-                    case 0:
-                        score+="Love";
-                        break;
-                    case 1:
-                        score+="Fifteen";
-                        break;
-                    case 2:
-                        score+="Thirty";
-                        break;
-                    case 3:
-                        score+="Forty";
-                        break;
-                }
-            }
+        String score;
+       
+        int player1Points = player1.getPoints();
+        int player2Points = player2.getPoints();
+        
+        if (player1Points == player2Points) {
+            score = equalScoreString(player1Points);
+        } else if (player1Points >= 4 || player2Points >= 4) {
+            score = advantageScoreString(player1Points, player2Points);
+        } else {
+            score = scoreString(player1Points, player2Points);
         }
         return score;
+    }
+    
+    public String singleScoreString(int points) {
+        if (points == 0) {
+            return "Love";
+        } else if (points == 1) {
+            return "Fifteen";
+        } else if (points == 2) {
+            return "Thirty";
+        } else {
+            return "Forty";
+        }
+    }
+    
+    public String scoreString (int player1Points, int player2Points) {
+        String scoreStr;
+        
+        String player1Score = singleScoreString(player1Points);
+        String player2Score = singleScoreString(player2Points);
+        
+        scoreStr = player1Score + "-" + player2Score;
+        
+        return scoreStr;  
+    }
+    
+    public String equalScoreString(int score) {
+        String scoreStr;
+        if (score > 3) {
+            return "Deuce";
+        }
+        
+        scoreStr = singleScoreString(score) + "-All";
+
+        return scoreStr;
+    }
+    
+    public String advantageScoreString(int player1Points, int player2Points) {
+        String scoreStr;
+        
+        // How many points is player 1 ahead of player 2
+        int player1Lead = player1Points - player2Points;
+        
+        if (player1Lead == 1) {
+            scoreStr ="Advantage player1";
+        } else if (player1Lead >= 2) {
+            scoreStr = "Win for player1";
+        } else if (player1Lead == -1) {
+            scoreStr ="Advantage player2";
+        } else {
+            scoreStr ="Win for player2";
+        }
+        
+        return scoreStr;
     }
 }
