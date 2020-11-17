@@ -18,7 +18,6 @@ public class IntJoukko {
 
     public IntJoukko(int kapasiteetti) {
         this(kapasiteetti, OLETUSKASVATUS);
-
     }
     
     
