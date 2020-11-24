@@ -17,6 +17,7 @@ public abstract class Komento {
     protected Button nollaa;
     protected Button undo;
     protected Sovelluslogiikka sovellus;
+    protected int edellinen;
     
     public Komento(TextField tuloskentta, TextField syotekentta, 
                         Button nollaa, Button undo, Sovelluslogiikka sovellus) {

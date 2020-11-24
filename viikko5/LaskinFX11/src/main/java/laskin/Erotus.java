@@ -20,6 +20,7 @@ public class Erotus extends Komento {
 
     @Override
     public void suorita() {
+        edellinen = sovellus.tulos();
         int arvo = 0;
         try {
             arvo = Integer.parseInt(syotekentta.getText());
@@ -41,6 +42,8 @@ public class Erotus extends Komento {
     
     @Override
     public void peru() {
-        
+        syotekentta.setText("");
+        tuloskentta.setText("" + edellinen);
+        sovellus.setTulos(edellinen);
     }
 }
