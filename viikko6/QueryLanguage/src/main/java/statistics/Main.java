@@ -11,9 +11,15 @@ public class Main {
         // Tehtävä 4
         QueryBuilder query = new QueryBuilder();
  
-        Matcher m = query.playsIn("NYR")
-                     .hasAtLeast(5, "goals")
-                     .hasFewerThan(10, "goals").build();
+        Matcher m1 = query.playsIn("PHI")
+                    .hasAtLeast(10, "assists")
+                    .hasFewerThan(8, "goals").build();
+
+        Matcher m2 = query.playsIn("NYR")
+                    .hasAtLeast(10, "points").build();
+
+        Matcher m = query.oneOf(m1, m2).build();
+
         
         // Tehtävä 3
         /*
