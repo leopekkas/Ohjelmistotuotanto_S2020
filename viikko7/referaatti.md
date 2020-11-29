@@ -1,0 +1,9 @@
+# Jatkuva eksperimentointi ohjelmistokehityksen tukena (referaatti)
+
+Esa Kortelainen tarkastelee kandidaatin tutkielmassaan eksperimentoinnin vaikutusta ohjelmistotuotannossa. Heti alkuun esimerkiksi nostetaan Toyotan 1940-luvulta lähtien kehitetty, aikanaan innovatiivinen, Kanban ja ketterä kehitystyö tehosti automerkin tuotantoa lähes kaksinkertaisesti verrattuna amerikkalaisiin autotuottajiin. <br/> <br/>
+
+Kortelainen tuo esille liiketoiminnalisia mahdollisuuksia, jota innovointi ja eksperimentaalinen kehitystyö voi ajaa. Täysin uusilla toimintatavoillaan startup tai suurempi yritys voi saavuttaa nopeasti jalansijaa ensimmäisenä uuden teknologian tarjoajana, ennen kilpailijoiden saapumista samoille markkinoille. Myös datapohjainen tutkimus ja innovaatio, jolla voidaan esimerkiksi saavuttaa täysin uusia asiakaskuntia nousee avainasemaan Kortelaisen kandidaatintutkielmassa sen sijaan, että päätöksenteossa pohjattaisiin vakiintuneisiin toimintatapoihin tai johtoportaan mielipiteisiin turvallisista laajentamistavoista.<br/> <br/>
+
+Tärkeäksi osaksi eksperimointiin ja innovatiivisuuteen pyrkiessä nousee tarve datan keräämiselle käyttäjäkunnasta ja uusien ideoiden kokeilemiseen asiakkaiden kanssa tiheällä tahdilla, jotta tarjotut palvelut vastaisivat mahdollisimman joustavasti asiakaskunnan uusia tarpeita. Helpoltava kuulostava vastaus mainittuihin tarpeisiin voisi olla feature branchien käyttäminen uusia ominaisuuksia tuotettaessa, mutta Kortelainen argumentoi tapaa vastaan ja painottaa toimintatapaa, jossa kaikilla asiakkailla on aina uusin versio ohjelmasta käytössään. Ongelmiin törmätessä vanhempaan versioon palaaminen tulisi tehdä helpoksi. <br/> <br/>
+
+Tutkielman tarkastelupisteiden kautta nähdään, miten nopean tiedonsiirron ja internetin aikakaudella eksperimentointia voidaan käyttää käyttäjädataan pohjautuvalla, joustavalla ja ripeällä tavalla yritystoiminnan tehostamiseen ja riskien välttämiseen. 
