@@ -9,6 +9,9 @@ public class Paaohjelma {
     public static void main(String[] args) {
 
         while (true) {
+            KPSPeli valittuPeli;
+            Pelitehdas pelivaihtoehdot = new Pelitehdas();
+            
             System.out.println("\nValitse pelataanko"
                     + "\n (a) ihmistä vastaan "
                     + "\n (b) tekoälyä vastaan"
@@ -16,21 +19,14 @@ public class Paaohjelma {
                     + "\nmuilla valinnoilla lopetataan");
 
             String vastaus = scanner.nextLine();
-            if (vastaus.endsWith("a")) {
-                System.out.println("peli loppuu kun pelaaja antaa virheellisen siirron eli jonkun muun kuin k, p tai s");
-                KPSPelaajaVsPelaaja kaksinpeli = new KPSPelaajaVsPelaaja();
-                kaksinpeli.pelaa();
-            } else if (vastaus.endsWith("b")) {
-                System.out.println("peli loppuu kun pelaaja antaa virheellisen siirron eli jonkun muun kuin k, p tai s");
-                KPSTekoaly yksinpeli = new KPSTekoaly();
-                yksinpeli.pelaa();
-            } else if (vastaus.endsWith("c")) {
-                System.out.println("peli loppuu kun pelaaja antaa virheellisen siirron eli jonkun muun kuin k, p tai s");
-                KPSParempiTekoaly pahaYksinpeli = new KPSParempiTekoaly();
-                pahaYksinpeli.pelaa();
-            } else {
+            
+            valittuPeli = pelivaihtoehdot.hae(vastaus);
+            
+            if (valittuPeli instanceof TuntematonPeli) {
                 break;
             }
+            
+            valittuPeli.pelaa();
 
         }
 
